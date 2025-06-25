@@ -153,4 +153,7 @@ export default {
       clearInterval(currentTimeout);
     }
   },
+  isRunning() {
+    return currentTimeout !== null;
+  },
 };

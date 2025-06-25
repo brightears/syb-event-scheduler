@@ -35,8 +35,36 @@ const build = (
 ) as ServerBuild | (() => Promise<ServerBuild>);
 
 app.use("/api/v1", apiRouter);
-app.get("/-/alive", (req, res) => res.sendStatus(200));
-app.get("/-/ready", (req, res) => res.sendStatus(200));
+// Health check endpoints for Render
+app.get("/-/alive", (req, res) => {
+  res.json({ 
+    status: "ok", 
+    timestamp: new Date().toISOString(),
+    service: "soundtrack-scheduler"
+  });
+});
+
+app.get("/-/ready", async (req, res) => {
+  try {
+    // Check database connection
+    const { sequelize } = await import("./lib/db/index.js");
+    await sequelize.authenticate();
+    
+    res.json({ 
+      status: "ready",
+      timestamp: new Date().toISOString(),
+      database: "connected",
+      worker: worker.isRunning() ? "running" : "stopped"
+    });
+  } catch (error) {
+    logger.error("Health check failed:", error);
+    res.status(503).json({ 
+      status: "not ready",
+      timestamp: new Date().toISOString(),
+      error: "Database connection failed"
+    });
+  }
+});
 app.all("*", createRequestHandler({ build }));
 
 if (process.env.SYNC_DB) {

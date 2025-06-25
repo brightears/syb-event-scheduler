@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: syb-event-scheduler
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5173
+      - key: SOUNDTRACK_API_URL
+        value: https://api.soundtrackyourbrand.com/v2
+      - key: SOUNDTRACK_API_TOKEN
+        sync: false # This will prompt for the value in Render dashboard
+      - key: DB_URI
+        sync: false # Database connection string
+      - key: WORKER_INTERVAL
+        value: "60"
+      - key: REQUEST_LOG
+        value: "true"
+    healthCheckPath: /-/ready
+    
+    # Auto-deploy on git push
+    autoDeploy: true
+    
+    # Scaling settings
+    scaling:
+      minInstances: 1
+      maxInstances: 3
+      targetMemoryPercent: 80
+      targetCPUPercent: 80
