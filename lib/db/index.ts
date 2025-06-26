@@ -121,7 +121,7 @@ export const CacheEntry = _sequelize.define("CacheEntry", {
 
 export const User = _sequelize.define("User", {
   key: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.INTEGER,
     primaryKey: true,
   },
   token: DataTypes.STRING,
