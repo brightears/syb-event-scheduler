@@ -156,11 +156,12 @@ Action.belongsTo(Event);
  * @param options Options passed to the models sync call.
  */
 export async function sync(options: SyncOptions) {
-  const types = [Event, ZoneEvent, Run, Action, CacheEntry, User];
-  types.forEach(async (type) => {
+  // Order matters for foreign key constraints
+  const types = [User, Event, Run, ZoneEvent, Action, CacheEntry];
+  for (const type of types) {
     logger.info(`Syncing table name ${type.getTableName()} ...`);
     await type.sync(options);
-  });
+  }
 }
 
 export const sequelize = _sequelize;
