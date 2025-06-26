@@ -2,6 +2,15 @@
 
 The Soundtrack Scheduler app lets you manage _Events_ that will assign music to one or many _Zones_ using the Soundtrack API.
 
+## 🆕 Recent Enhancements
+
+This is an enhanced version with the following improvements:
+- **Manual zone management** - Add zones by ID without loading all zones
+- **Environment validation** - Better error handling for configuration
+- **Production-ready deployment** - Docker and Render.com support
+- **Health monitoring** - Enhanced health check endpoints
+- **User manual** - See [USER_MANUAL.md](USER_MANUAL.md) for detailed usage instructions
+
 ## Gettings started
 
 - Install dependencies `npm install`, `yarn install` or `pnpm install` (this documentation will use `pnpm` for the following examples)
