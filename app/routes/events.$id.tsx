@@ -15,6 +15,7 @@ import DateTime from "~/components/DateTime";
 import EventForm, { EventData } from "~/components/forms/EventForm";
 import { Button } from "~/components/ui/button";
 import Paper from "~/components/Paper";
+import AddZoneById from "~/components/AddZoneById";
 import {
   Account,
   AccountZone,
@@ -288,6 +289,26 @@ export default function Event() {
               )}
             </Paper>
           </PageWrap>
+          <div className="mt-4">
+            <AddZoneById 
+              onZoneAdded={async (zone) => {
+                // Check if zone is already added
+                if (activeZoneIds.includes(zone.id)) {
+                  toast("Zone is already added to this event");
+                  return;
+                }
+                
+                // Add the zone to the event
+                await handleZoneAction({
+                  add: [{
+                    zoneId: zone.id,
+                    accountId: zone.account?.id || zone.accountId
+                  }],
+                  remove: []
+                });
+              }}
+            />
+          </div>
           <div className="flex mt-4">
             <div className="flex-1">
               <h2 className="text-sm font-medium mb-2">Available zones</h2>
