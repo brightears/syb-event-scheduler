@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import useSWR, { mutate } from "swr";
 import pluralize from "pluralize";
 import LoadZonesByAccount from "~/components/LoadZonesByAccount";
+import LibraryDebug from "~/components/LibraryDebug";
 import {
   CheckIcon,
   ExclamationTriangleIcon,
@@ -163,6 +164,7 @@ export default function Settings() {
       </Popover>
       <h3 className="mt-3 mb-2 text-sm">Preview selected library</h3>
       <AssignableSelect value={null} onChange={() => {}} />
+      {libraryId && <LibraryDebug accountId={libraryId} />}
       <div className="border-t border-slate-200 my-4"></div>
       <h1>Zone Management</h1>
       <p className="text-sm text-slate-400">Load zones efficiently</p>
